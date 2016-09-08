@@ -1,0 +1,53 @@
+*{margin: 0;padding: 0;}
+ body{background: #544; 
+  background: linear-gradient(#569, #600);
+  padding-bottom:10%;
+  font: 18px montserrat;
+  }
+h1{text-align:center; 
+  font-size:72px;
+  color:#249;
+  padding-top:10px;
+  text-shadow:1px 1px 3px #000; 
+  word-spacing: 10px;
+}
+#buttons{
+  text-align:center;
+  padding-top:5%;
+}
+
+#play,#hit,#stand{
+  border:1px solid #249;
+  padding:10px 15px;
+  color:#DDD;
+  font-size:18px;
+  background-color:#249;
+  box-shadow:1px 1px 3px #000;
+}
+
+#play,#hit{margin-right:10px;}
+
+#player{
+  background-color:#006400;
+  box-shadow:1px 1px 3px #000;
+  height:150px;
+  margin: 5% 15%;
+}
+#player p,#dealer p{padding-left:-13px;}
+#dealer{
+  background-color:#006400;
+  border:1px solid;
+  height:150px;
+  margin: 0% 15%;
+}
+p{
+  margin-top:2%;
+  display:inline-flex;
+  margin-left:2%;
+}
+#reset{
+  position:fixed;
+  margin-left:39%;
+  margin-top:1%;
+  box-shadow:1px 1px 3px #000;
+}

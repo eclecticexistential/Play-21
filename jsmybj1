@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel ="stylesheet" type="text/css" href="jsmybjstyle.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row col-m-6">
+<h1>WELCOME TO TWENTY-ONE</h1>
+<div id="buttons" class="col-s-6">
+<input type=button id="play" value="Play!">
+<input type=button id="hit" value="Hit">
+<input type=button id="stand" value="Stand">
+</div>
+<div id="reset" value="Play again?" class="col-s-6"></div>
+<div id="player" class="col-s-6">
+<p id="d" class="col-xs-3"></p>
+</div>
+<br>
+<div id="dealer" class="col-s-6">
+<p id="j" class="col-xs-3"></p>
+</div>
+</div>
+</div>
+
+
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+
+
+var score=0;
+var dealerHand=0;
+var aces=0;
+var dealerAces=0;
+
+function p(x){
+  var p=(Math.floor((Math.random())*x)+1);
+  return p;
+}
+function draw(){
+  y=p(13);
+  return y;
+}
+
+function suit(){
+  var y=p(4);switch (y){
+    case 1: return "\u2660"; break;
+  case 2: return "\u2661"; break;
+  case 3: return "\u2662"; break;
+  case 4: return "\u2663"; break;
+    } 
+  return;
+}
+
+function kind(w){
+  if(w==1)return "A ";
+    if(w==11)return "J ";
+    if(w==12)return "Q ";
+  if(w==13)return "K ";
+  return "" + w;
+  }
+
+function total(m){
+                    if(m>10)m=10;
+                    score+=m;
+                    if((score<=11)&&(m===1)) {return (score+=10)+(aces+=1);}
+                    if(score>21 && aces>0){return score-=10;}
+                  return score;}
+
+function card(){
+return draw();
+}
+
+function game(){
+  y=card()
+  total(y);
+  return (kind(y))+ ' ' +suit();
+}
+
+function cardTo(){
+  var newNode = document.createElement('p');
+            newNode.innerHTML = game();
+            newNode.style.background="white";
+            newNode.style.border="1px solid black";
+            newNode.style.padding="15px 15px";
+            document.getElementById('player').appendChild(newNode);
+}
+
+//play
+document.getElementById("play").addEventListener("click", function(){
+    cardTo();
+    cardTo();
+    document.getElementById("d").innerHTML="Current score: "+score;
+    document.getElementById("d").style.color="white";
+    return disable();
+});
+
+function disable() {
+    document.getElementById("play").disabled = 'true';
+}
+
+//hit
+document.getElementById("hit").addEventListener("click", function(){
+  cardTo();
+  document.getElementById("d").innerHTML="Updated score: "+score;
+  if(score>21 && aces==0){alert("You busted!"); return pA();}
+});
+
+//stand
+document.getElementById("stand").addEventListener("click", function(){
+  return dealer();
+});
+
+function dealerScore(m){
+                    if(m>10)m=10;
+                    dealerHand+=m;
+                    if((dealerHand<=11)&&(m===1)) {return (dealerAces+=1)+(dealerHand+=10);}
+                    if(dealerHand>21 && dealerAces>0){return dealerHand-=10;}
+                  return dealerHand;}
+
+function dealerCard(){
+    x=card()
+    dealerScore(x)
+    return (kind(x))+ ' ' +suit();
+}
+
+function dealer(){
+  while(dealerHand<score){
+  (function(){   
+            var newNode = document.createElement('p');
+            newNode.innerHTML = dealerCard();
+            newNode.style.background="white";
+            newNode.style.border="1px solid black";
+            newNode.style.padding="15px 15px";
+            document.getElementById('dealer').appendChild(newNode);           
+        })();
+  document.getElementById("j").innerHTML= "Dealer's total: " +dealerHand;
+  document.getElementById("j").style.color="white";}
+  if(dealerHand===score){alert("Dealer wins in a draw!"); return pA();}
+  if(dealerHand===21){alert("Dealer wins with 21!"); return pA();}
+  if(dealerHand>21 && dealerAces==0){alert("Dealer busted! You win!"); return pA();}
+  if(dealerHand>=score){alert("Dealer wins this round!"); return pA();}
+  return compare();
+}
+
+function compare(){
+if(dealerHand<score){alert("You win!");}
+else return pA();
+}
+
+function pA(){
+     document.getElementById("reset").innerHTML = '<input type=button id="pa" value="Play again?">';
+     document.getElementById("pa").style.border="1px solid #249";
+     document.getElementById("pa").style.background="#249";
+     document.getElementById('pa').style.color= '#DDD';
+     document.getElementById('pa').style.padding= '10px 15px';
+     document.getElementById('pa').style.font= '18px arial';
+     document.getElementById("pa").addEventListener("click",function(){return document.location.reload();});
+}
+
+</script>
